@@ -1,0 +1,12 @@
+@use '../../styles/variables' as *;
+
+.empty {
+  margin: 2em 0 0 1em;
+
+  .span {
+    color: darken($lime-green, 20%);
+    font-weight: bold;
+    font-size: 115%;
+    margin-left: 3px;
+  }
+}

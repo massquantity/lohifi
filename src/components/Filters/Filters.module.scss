@@ -1,0 +1,11 @@
+@use '../../styles/variables' as *;
+
+.container {
+
+  h4 {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+    margin-top: 2rem;
+    color: $japonica;
+  }
+}

@@ -1,0 +1,58 @@
+@use '../../styles/variables' as *;
+
+.title {
+  font-size: 1.8em;
+  // height: 1.2em;
+
+  h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    padding: 0;
+    color: $red;
+  }
+}
+
+.content {
+  //display: grid;
+  //grid-template-columns: auto 1fr;
+  //grid-column-gap: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 0.8em;
+  font-size: 1em;
+
+  .artist {
+    flex: 1;
+    line-height: 1.5;
+
+    .property {
+      display: inline;
+      color: $japonica;
+      font-weight: bold;
+      margin-right: 0.18em;
+    }
+  }
+
+  .date {
+    flex: 1;
+    line-height: 1.8;
+    font-size: 0.85em;
+    font-style: italic;
+
+    .property {
+      display: inline;
+      color: $japonica;
+      margin-right: 0.18em;
+    }
+  }
+}
+
+.urls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+  column-gap: 1.2em;
+}
