@@ -1,4 +1,10 @@
-import { ClearRefinements, connectStateResults, InfiniteHits } from "react-instantsearch-dom";
+import {
+  ClearRefinements,
+  connectStateResults,
+  InfiniteHits,
+  SortBy,
+  Stats,
+} from "react-instantsearch-dom";
 import Hit from "../Hit";
 import styles from "./SearchResults.module.scss";
 
@@ -18,10 +24,21 @@ const SearchResults = ({ searchState, searchResults, error }) => {
 
   return (
     <>
-      {query !== '' && (
+      { query && (
         <>
           {numHits > 0 ? (
             <div>
+              <div className={styles.stats}>
+                <SortBy
+                  defaultRefinement="releases"
+                  items={[
+                    { label: 'Relevancy', value: 'releases' },
+                    { label: 'Recent first', value: 'releases:release_date:desc' },
+                    { label: 'Old first', value: 'releases:release_date:asc' },
+                  ]}
+                />
+                <Stats />
+              </div>
               <InfiniteHits
                 hitComponent={Hit}
                 translations={{loadMore: 'Show more results'}}

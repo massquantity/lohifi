@@ -5,7 +5,6 @@ import Filters from "../components/Filters";
 import SearchResults from "../components/SearchResults";
 import styles from '../styles/home.module.scss';
 
-
 const INDEX_NAME = 'releases';
 const searchClient = instantMeiliSearch(
   process.env.NEXT_PUBLIC_MEILI_HOST,
