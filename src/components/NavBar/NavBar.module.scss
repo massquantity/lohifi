@@ -2,7 +2,7 @@
 
 .searchbox {
   flex: 1;
-  margin: 0 12em;
+  margin: 0 12vw;
   padding: 1.6em 40px 0.4em 40px;
   z-index: 10;
   position: sticky;
@@ -11,9 +11,18 @@
   border-bottom: 3px solid #0001;
   border-radius: 8em;
 
+  @media screen and (max-width: 1600px) {
+    margin: 0 4vw;
+  }
+
+  @media screen and (max-width: 1200px) {
+    margin: 0;
+    border-radius: 0;
+  }
+
   .input {
     // position: relative;
-    background-color: #fff;
+    background-color: $gray-100;
     border-radius: 9px;
     box-shadow: 0 4px 18px 0 rgb(0 0 0 / 10%);
     font-family: $fonts;

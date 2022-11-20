@@ -13,17 +13,33 @@
 
 .container {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: repeat(7, 1fr);
+  justify-content: center;
+  // justify-items: center;
 
   .filters {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin: 1px 1px 3rem calc(15rem + 8px);
+    margin: 1px 1px 7vh 2vw;
+    grid-column: 2 / 3;
   }
 
   .results {
     padding-left: 3em;
-    margin: 2rem 14rem 10rem 0;
+    margin: 2rem 1vw 5rem 1px;
+    grid-column: 3 / 7;
+  }
+
+  @media screen and (max-width: 1400px) {
+    grid-template-columns: auto 1fr;
+
+    .filters {
+      margin-left: calc(2px + 2vw);
+    }
+
+    .results {
+      margin-right: calc(2px + 2vw);
+    }
   }
 }
