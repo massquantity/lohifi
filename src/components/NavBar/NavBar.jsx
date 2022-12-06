@@ -1,13 +1,5 @@
-import { connectSearchBox } from "react-instantsearch-dom";
+import { useSearchBox } from 'react-instantsearch-hooks-web';
 import styles from './NavBar.module.scss';
-
-// const NavBar = () => {
-//  return (
-//    <div className={styles.container}>
-//      <SearchBox translations={{placeholder: 'Search release or artist here...'}} />
-//    </div>
-//  );
-// };
 
 const exampleTerm = (text, refine) => (
   <a
@@ -19,25 +11,30 @@ const exampleTerm = (text, refine) => (
   </a>
 );
 
-const SearchBox = ({ currentRefinement, refine }) => (
-  <form noValidate action="" role="search" className={styles.searchbox}>
-    <input
-      type="search"
-      value={currentRefinement}
-      onChange={e => refine(e.currentTarget.value)}
-      className={styles.input}
-    />
-    <span className={styles.span}>Examples:</span>
-    {exampleTerm('The Beatles', refine)}
-    {exampleTerm('Bach: Goldberg Variations', refine)}
-    {exampleTerm('The Wall', refine)}
-    {exampleTerm('King Crimson', refine)}
-    {exampleTerm('Kendrick Lamar', refine)}
-    {exampleTerm('Symphony No. 9', refine)}
-    {exampleTerm('周杰伦', refine)}
-    {exampleTerm('久石譲', refine)}
-    {exampleTerm('機動戦士ガンダム', refine)}
-  </form>
-);
+const NavBar = ({ placeholder }) => {
+  const { query, refine, clear } = useSearchBox();
 
-export default connectSearchBox(SearchBox);
+  return (
+    <form noValidate action="" role="search" className={styles.searchbox}>
+      <input
+        type="search"
+        placeholder={placeholder}
+        value={query}
+        onChange={e => refine(e.currentTarget.value)}
+        className={styles.input}
+      />
+      <span className={styles.span}>Examples:</span>
+      {exampleTerm('The Beatles', refine)}
+      {exampleTerm('Bach: Goldberg Variations', refine)}
+      {exampleTerm('The Wall', refine)}
+      {exampleTerm('King Crimson', refine)}
+      {exampleTerm('Kendrick Lamar', refine)}
+      {exampleTerm('Symphony No. 9', refine)}
+      {exampleTerm('周杰伦', refine)}
+      {exampleTerm('久石譲', refine)}
+      {exampleTerm('機動戦士ガンダム', refine)}
+    </form>
+  );
+};
+
+export default NavBar;

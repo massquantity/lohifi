@@ -42,6 +42,10 @@
   color: $mummy-brown;
 }
 
+.ais-CurrentRefinements-label {
+  display: none;
+}
+
 .ais-CurrentRefinements-list {
   display: flex;
   flex-direction: column;
