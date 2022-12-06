@@ -1,4 +1,4 @@
-import { Highlight } from "react-instantsearch-dom";
+import { Highlight } from "react-instantsearch-hooks-web";
 import styles from './Hit.module.scss';
 import Image from "next/image";
 
@@ -33,7 +33,7 @@ const Hit = ({ hit }) => {
     <div>
       <div className={styles.title}>
         <h6>
-          <Highlight attribute="title" hit={hit} tagName="mark" />
+          <Highlight attribute="title" hit={hit} highlightedTagName="mark" />
         </h6>
       </div>
       <div className={styles.content}>

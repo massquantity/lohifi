@@ -1,5 +1,5 @@
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
-import { Configure, InstantSearch } from 'react-instantsearch-dom'
+import { Configure, InstantSearch } from 'react-instantsearch-hooks-web';
 import NavBar from "../components/NavBar";
 import Filters from "../components/Filters";
 import SearchResults from "../components/SearchResults";
@@ -17,13 +17,14 @@ const searchClient = instantMeiliSearch(
   }
 );
 
+
 export default function Home() {
   return (
     <div>
       <h1 className={styles.header}>Instant Music Search</h1>
-      <InstantSearch indexName={INDEX_NAME} searchClient={searchClient}>
+      <InstantSearch indexName={INDEX_NAME} searchClient={searchClient} routing={true}>
         <div className={styles.searchbar}>
-          <NavBar />
+          <NavBar placeholder="Search release or artist here..." />
         </div>
         <div className={styles.container}>
           <div className={styles.filters}>
@@ -34,7 +35,7 @@ export default function Home() {
           </div>
         </div>
         <Configure hitsPerPage={15} />
-    </InstantSearch>
+      </InstantSearch>
     </div>
   );
 };

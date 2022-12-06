@@ -1,4 +1,4 @@
-import { CurrentRefinements, Menu, RefinementList } from 'react-instantsearch-dom';
+import { CurrentRefinements, Menu, RefinementList } from 'react-instantsearch-hooks-web';
 import styles from './Filters.module.scss'
 
 const transformCurrentRefinements = items => {
@@ -20,11 +20,11 @@ const RefinementComponent = attribute => {
   return (
     <RefinementList
       attribute={attribute}
-      showMore
       operator="or"
+      showMore={true}
       translations={{
-        showMore(expanded) {
-          return expanded ? 'Show less options' : 'Show more options';
+        showMoreButtonText({ isShowingMore }) {
+          return isShowingMore ? 'Show less options' : 'Show more options';
         },
       }}
     />

@@ -1,19 +1,28 @@
+import { connectStats } from "instantsearch.js/es/connectors";
 import {
   ClearRefinements,
-  connectStateResults,
   InfiniteHits,
-  SortBy,
-  Stats,
-} from "react-instantsearch-dom";
+  SortBy, useConnector,
+  useInstantSearch,
+} from "react-instantsearch-hooks-web";
 import Hit from "../Hit";
 import styles from "./SearchResults.module.scss";
 
+const Stats = () => {
+  const { nbHits, processingTimeMS } = useConnector(connectStats);
+  return (
+    <div className={styles.stats}>
+      {nbHits} results found in {processingTimeMS}ms.
+    </div>
+  )
+};
 
-const SearchResults = ({ searchState, searchResults, error }) => {
-  const query = searchState.query;
-  const numHits = searchResults?.nbHits || 0;
+const SearchResults = () => {
+  const { uiState, results, error } = useInstantSearch();
+  const query = uiState.releases.query;
+  const numHits = results?.nbHits || 0;
 
-  if (!searchResults) {
+  if (!results) {
     return (
       <>
         Failed to get search results
@@ -28,9 +37,8 @@ const SearchResults = ({ searchState, searchResults, error }) => {
         <>
           {numHits > 0 ? (
             <div>
-              <div className={styles.stats}>
+              <div className={styles.meta}>
                 <SortBy
-                  defaultRefinement="releases"
                   items={[
                     { label: 'Relevancy', value: 'releases' },
                     { label: 'Recent first', value: 'releases:release_date:desc' },
@@ -41,7 +49,8 @@ const SearchResults = ({ searchState, searchResults, error }) => {
               </div>
               <InfiniteHits
                 hitComponent={Hit}
-                translations={{loadMore: 'Show more results'}}
+                showPrevious={false}
+                translations={{showMoreButtonText: 'Show more results'}}
               />
             </div>
           ) : (
@@ -56,4 +65,4 @@ const SearchResults = ({ searchState, searchResults, error }) => {
   );
 };
 
-export default connectStateResults(SearchResults);
+export default SearchResults;
