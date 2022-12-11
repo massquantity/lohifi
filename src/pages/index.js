@@ -1,5 +1,12 @@
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
-import { Configure, InstantSearch } from 'react-instantsearch-hooks-web';
+import { renderToString } from "react-dom/server";
+import { getServerState } from "react-instantsearch-hooks-server";
+import { history } from 'instantsearch.js/es/lib/routers/index.js';
+import {
+  Configure,
+  InstantSearch,
+  InstantSearchSSRProvider,
+} from 'react-instantsearch-hooks-web';
 import NavBar from "../components/NavBar";
 import Filters from "../components/Filters";
 import SearchResults from "../components/SearchResults";
@@ -17,12 +24,20 @@ const searchClient = instantMeiliSearch(
   }
 );
 
-
-export default function Home() {
+export default function Home({ serverState, url }) {
   return (
-    <div>
+    <InstantSearchSSRProvider {...serverState}>
       <h1 className={styles.header}>Instant Music Search</h1>
-      <InstantSearch indexName={INDEX_NAME} searchClient={searchClient} routing={true}>
+      <InstantSearch
+        indexName={INDEX_NAME}
+        searchClient={searchClient}
+        routing={{
+          router: history({
+            getLocation: () =>
+              typeof window === 'undefined' ? new URL(url) : window.location,
+          }),
+        }}
+      >
         <div className={styles.searchbar}>
           <NavBar placeholder="Search release or artist here..." />
         </div>
@@ -36,6 +51,25 @@ export default function Home() {
         </div>
         <Configure hitsPerPage={15} />
       </InstantSearch>
-    </div>
+    </InstantSearchSSRProvider>
   );
+};
+
+export const getServerSideProps = async ({ req, res }) => {
+  res.setHeader(
+    'Cache-Control',
+    `public, s-maxage=${60 * 60}, stale-while-revalidate=${24 * 60 * 60}`
+  );
+
+  const protocol = req.headers.referer?.split('://')[0] || 'https';
+  const url = `${protocol}://${req.headers.host}${req.url}`;
+  const serverState = await getServerState(<Home url={url} />, { renderToString });
+  // console.log(serverState['initialResults']['releases']['state']);
+  // console.log(url);
+  return {
+    props: {
+      serverState,
+      url,
+    },
+  };
 };
