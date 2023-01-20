@@ -1,4 +1,5 @@
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
+import { useState } from "react";
 import { renderToString } from "react-dom/server";
 import { getServerState } from "react-instantsearch-hooks-server";
 import { history } from 'instantsearch.js/es/lib/routers/index.js';
@@ -25,6 +26,8 @@ const searchClient = instantMeiliSearch(
 );
 
 export default function Home({ serverState, url }) {
+  const [query, setQuery] = useState("");
+
   return (
     <InstantSearchSSRProvider {...serverState}>
       <h1 className={styles.header}>Instant Music Search</h1>
@@ -39,11 +42,11 @@ export default function Home({ serverState, url }) {
         }}
       >
         <div className={styles.searchbar}>
-          <NavBar placeholder="Search release or artist here..." />
+          <NavBar onQueryChange={setQuery} />
         </div>
         <div className={styles.container}>
           <div className={styles.filters}>
-            <Filters />
+            <Filters query={query} />
           </div>
           <div className={styles.results}>
             <SearchResults />

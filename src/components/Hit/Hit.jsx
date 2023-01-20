@@ -39,7 +39,7 @@ const Hit = ({ hit }) => {
       <div className={styles.content}>
         <div className={styles.artist}>
           <span className={styles.property}>Artist:</span>{' '}
-          <Highlight attribute="artist" hit={hit} tagName="mark" />
+          <Highlight attribute="artist" hit={hit} highlightedTagName="mark" />
         </div>
         <div className={styles.date}>
           <span className={styles.property}>Release Date:</span>{' '}
