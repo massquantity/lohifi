@@ -4,12 +4,13 @@ import styles from './Filters.module.scss'
 const transformCurrentRefinements = items => {
   const uniqueItems = [];
   const labels = new Set();
-  for (let item of items) {
+  for (const [i, item] of items.entries()) {
     if (!labels.has(item.label)) {
       labels.add(item.label)
       if (item.attribute === 'release_decade') {
         item['items'] = [{label: item.currentRefinement, value: item.value}]
       }
+      item.indexName += i;  // indexName is used as key in CurrentRefinement
       uniqueItems.push({...item, label: ''})
     }
   }
@@ -31,24 +32,28 @@ const RefinementComponent = attribute => {
   );
 };
 
-const Filters = () => {
+const Filters = ({ query }) => {
   return (
-    <div className={styles.container}>
-      <CurrentRefinements transformItems={transformCurrentRefinements} />
-      <h4>Release Decade</h4>
-      <Menu
-        attribute="release_decade"
-        transformItems={items => items.sort((a, b) => a.label > b.label ? 1 : -1)}
-      />
-      <h4>Artists</h4>
-      {RefinementComponent('artist')}
-      <h4>Genres</h4>
-      {RefinementComponent('genres')}
-      <h4>Release Type</h4>
-      {RefinementComponent('release_type')}
-      <h4>Format</h4>
-      {RefinementComponent('format')}
-    </div>
+    <>
+      { query && (
+        <div className={styles.container}>
+          <CurrentRefinements transformItems={transformCurrentRefinements} />
+          <h4>Release Decade</h4>
+          <Menu
+            attribute="release_decade"
+            transformItems={items => items.sort((a, b) => a.label > b.label ? 1 : -1)}
+          />
+          <h4>Artists</h4>
+          {RefinementComponent('artist')}
+          <h4>Genres</h4>
+          {RefinementComponent('genres')}
+          <h4>Release Type</h4>
+          {RefinementComponent('release_type')}
+          <h4>Format</h4>
+          {RefinementComponent('format')}
+        </div>
+      )}
+    </>
   );
 };
 
